@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Videos - TechVerse</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-bg: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(45deg, #0f172a, #1e293b);
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: move 20s linear infinite;
+        }
+
+        @keyframes move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        nav {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a.active {
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--gradient);
+            border-radius: 20px;
+            margin: 2rem 0;
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.8s;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section {
+            margin: 3rem 0;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            background: var(--card-bg);
+            color: var(--light);
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--gradient);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .video-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            animation: fadeIn 0.8s;
+            cursor: pointer;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+            border-color: var(--primary);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .video-card:hover .play-button {
+            background: white;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .play-button::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 20px solid var(--primary);
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            margin-left: 5px;
+        }
+
+        .duration {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 0.3rem 0.6rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .video-info {
+            padding: 1.5rem;
+        }
+
+        .video-category {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: var(--gradient);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .video-title {
+            font-size: 1.3rem;
+            color: var(--light);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .video-description {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .video-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .video-stats span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .subscribe-cta {
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 15px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+            animation: fadeIn 1s;
+        }
+
+        .subscribe-cta h3 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .subscribe-cta p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #cbd5e1;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(99, 102, 241, 0.6);
+        }
+
+        footer {
+            background: rgba(15, 23, 42, 0.95);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 2px solid var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(15, 23, 42, 0.98);
+                padding: 2rem;
+                gap: 1rem;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">TechVerse</a>
+            <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+            <ul id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="youtube.html" class="active">YouTube Videos</a></li>
+                <li><a href="blogs.html">Blogs</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms & Conditions</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h1>🎥 YouTube Video Tutorials</h1>
+            <p>Watch & Learn from Expert-Led Video Content</p>
+        </div>
+
+        <div class="section">
+            <h2>Browse by Category</h2>
+            <div class="filter-tabs">
+                <button class="filter-btn active" onclick="filterVideos('all')">All Videos</button>
+                <button class="filter-btn" onclick="filterVideos('webdev')">Web Development</button>
+                <button class="filter-btn" onclick="filterVideos('python')">Python</button>
+                <button class="filter-btn" onclick="filterVideos('javascript')">JavaScript</button>
+                <button class="filter-btn" onclick="filterVideos('ai')">AI & ML</button>
+                <button class="filter-btn" onclick="filterVideos('mobile')">Mobile Dev</button>
+            </div>
+
+            <div class="video-grid" id="videoGrid">
+                <!-- Web Development Videos -->
+                <div class="video-card" data-category="webdev">
+                    <div class="video-thumbnail">
+                        <div class="play-button"></div>
+                        <div class="duration">24:15</div>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-category">Web Development</span>
+                        <h3 class="video-title">Complete React JS Course for Beginners 2025</h3>
+                        <p class="video-description">Learn React from scratch with hooks, state management, and build real-world projects.</p>
+                        <div class="video-stats">
+                            <span>👁️ 125K views</span>
+                            <span>📅 2 weeks ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card" data-category="webdev">
+                    <div class="video-thumbnail">
+                        <div class="play-button"></div>
+                        <div class="duration">18:42</div>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-category">Web Development</span>
+                        <h3 class="video-title">CSS Grid & Flexbox - Master Responsive Design</h3>
+                        <p class="video-description">Master modern CSS layouts and create stunning responsive websites.</p>
+                        <div class="video-stats">
+                            <span>👁️ 89K views</span>
+                            <span>📅 1 month ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card" data-category="webdev">
+                    <div class="video-thumbnail">
+                        <div class="play-button"></div>
+                        <div class="duration">32:18</div>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-category">Web Development</span>
+                        <h3 class="video-title">Build a Full Stack App with Next.js 14</h3>
+                        <p class="video-description">Complete tutorial on building modern web applications with Next.js and React.</p>
+                        <div class="video-stats">
+                            <span>👁️ 156K views</span>
+                            <span>📅 3 weeks ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Python Videos -->
+                <div class="video-card" data-category="python">
+                    <div class="video-thumbnail">
+                        <div class="play-button"></div>
+                        <div class="duration">45:30</div>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-category">Python</span>
+                        <h3 class="video-title">Python Programming Complete Bootcamp</h3>
+                        <p class="video-description">Everything you need to know about Python from basics to advanced concepts.</p>
+                        <div class="video-stats">
+                            <span>👁️ 234K views</span>
+                            <span>📅 1 week ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card" data-category="python">
+                    <div class="video-thumbnail">
+                        <div class="play-button"></div>
+                        <div class="duration">28:55</div>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-category">Python</span>
+                        <h3 class="video-title">Django REST API Development Tutorial</h3>
+                        <p class="video-description">Build powerful REST APIs using Django and Django REST Framework.</p>
+                        <div class="video-stats">
+                            <span>👁️ 98K views</span>
+                            <span>📅 2 weeks ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- JavaScript Videos -->
+                <div class="video-card" data-category="javascript">
+                    <div class="video-thumbnail">
+                        <div class="play-button"></div>
+                        <div class="duration">22:10</div>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-category">JavaScript</span>
+                        <h3 class="video-title">Modern JavaScript ES6+ Features Explained</h3>
+                        <p class="video-description">Master modern JavaScript with arrow functions, destructuring, async/await and more.</p>
+                        <div class="video-stats">
+                            <span>👁️ 145K views</span>
+                            <span>📅 5 days ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card" data-category="javascript">
+                    <div class="video-thumbnail">
+                        <div class="play-button"></div>
+                        <div class="duration">36:25</div>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-category">JavaScript</span>
+                        <h3 class="video-title">Node.js & Express - Build REST APIs</h3>
+                        <p class="video-description">Complete guide to building scalable REST APIs with Node.js and Express.</p>
+                        <div class="video-stats">
+                            <span>👁️ 178K views</span>
+                            <span>📅 2 weeks ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI & ML Videos -->
+                <div class="video-card" data-category="ai">
+                    <div class="video-thumbnail">
+                        <div class="play-button"></div>
+                        <div class="duration">52:40</div>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-category">AI & ML</span>
+                        <h3 class="video-title">Machine Learning Fundamentals with Python</h3>
+                        <p class="video-description">Introduction to machine learning concepts and practical implementation in Python.</p>
+                        <div class="video-stats">
+                            <span>👁️ 267K views</span>
+                            <span>📅 1 month ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card" data-category="ai">
+                    <div class="video-thumbnail">
+                        <div class="play-button"></div>
+                        <div class="duration">41:15</div>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-category">AI & ML</span>
+                        <h3 class="video-title">Deep Learning with TensorFlow 2.0</h3>
+                        <p class="video-description">Build neural networks and deep learning models using TensorFlow.</p>
+                        <div class="video-stats">
+                            <span>👁️ 189K views</span>
+                            <span>📅 3 weeks ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Dev Videos -->
+                <div class="video-card" data-category="mobile">
+                    <div class="video-thumbnail">
+                        <div class="play-button"></div>
+                        <div class="duration">38:20</div>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-category">Mobile Development</span>
+                        <h3 class="video-title">React Native - Build iOS & Android Apps</h3>
+                        <p class="video-description">Create cross-platform mobile applications with React Native.</p>
+                        <div class="video-stats">
+                            <span>👁️ 142K views</span>
+                            <span>📅 1 week ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card" data-category="mobile">
+                    <div class="video-thumbnail">
+                        <div class="play-button"></div>
+                        <div class="duration">44:55</div>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-category">Mobile Development</span>
+                        <h3 class="video-title">Flutter Complete Course - Build Beautiful Apps</h3>
+                        <p class="video-description">Master Flutter and create stunning mobile applications for iOS and Android.</p>
+                        <div class="video-stats">
+                            <span>👁️ 198K views</span>
+                            <span>📅 2 weeks ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="subscribe-cta">
+            <h3>🔔 Subscribe to Our YouTube Channel</h3>
+            <p>Get notified about new tutorials, coding tips, and tech insights every week!</p>
+            <a href="#" class="btn">Subscribe Now</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 TechVerse. All Rights Reserved.</p>
+        <p>Made with 💜 for developers worldwide</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('nav-menu').classList.toggle('active');
+        }
+
+        function filterVideos(category) {
+            const cards = document.querySelectorAll('.video-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter videos
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('nav');
+            const menu = document.getElementById('nav-menu');
+            
+            if (!nav.contains(event.target) && menu.classList.contains('active')) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

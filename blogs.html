@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Blogs - TechVerse</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-bg: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(45deg, #0f172a, #1e293b);
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: move 20s linear infinite;
+        }
+
+        @keyframes move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        nav {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a.active {
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--gradient);
+            border-radius: 20px;
+            margin: 2rem 0;
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.8s;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .search-bar {
+            max-width: 600px;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1.5rem;
+            background: var(--card-bg);
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 50px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .search-bar::after {
+            content: '🔍';
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .section {
+            margin: 3rem 0;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            background: var(--card-bg);
+            color: var(--light);
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--gradient);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .featured-blog {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid var(--primary);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.3);
+            margin-bottom: 3rem;
+            animation: fadeIn 0.8s;
+            transition: all 0.3s;
+        }
+
+        .featured-blog:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(99, 102, 241, 0.5);
+        }
+
+        .featured-blog-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .featured-image {
+            background: var(--gradient);
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-image::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 6s ease-in-out infinite;
+        }
+
+        .featured-text {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            width: fit-content;
+        }
+
+        .featured-text h3 {
+            font-size: 2rem;
+            color: var(--light);
+            margin-bottom: 1rem;
+        }
+
+        .featured-text p {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 2rem;
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .read-more {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+            width: fit-content;
+        }
+
+        .read-more:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .blog-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            animation: fadeIn 0.8s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+            border-color: var(--primary);
+        }
+
+        .blog-image {
+            background: var(--gradient);
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-image::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-category {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: var(--gradient);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+            width: fit-content;
+        }
+
+        .blog-title {
+            font-size: 1.4rem;
+            color: var(--light);
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .blog-excerpt {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .blog-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .blog-author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .blog-date {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0;
+        }
+
+        .pagination button {
+            padding: 0.8rem 1.5rem;
+            background: var(--card-bg);
+            color: var(--light);
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .pagination button:hover, .pagination button.active {
+            background: var(--gradient);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background: rgba(15, 23, 42, 0.95);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 2px solid var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 968px) {
+            .featured-blog-content {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-image {
+                min-height: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(15, 23, 42, 0.98);
+                padding: 2rem;
+                gap: 1rem;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-text h3 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">TechVerse</a>
+            <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+            <ul id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="youtube.html">YouTube Videos</a></li>
+                <li><a href="blogs.html" class="active">Blogs</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms & Conditions</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h1>📚 Tech Blogs & Articles</h1>
+            <p>Insights, Tutorials & Latest Tech Trends</p>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" placeholder="Search blogs..." id="searchInput" onkeyup="searchBlogs()">
+        </div>
+
+        <div class="filter-tabs">
+            <button class="filter-btn active" onclick="filterBlogs('all')">All Blogs</button>
+            <button class="filter-btn" onclick="filterBlogs('webdev')">Web Development</button>
+            <button class="filter-btn" onclick="filterBlogs('ai')">AI & ML</button>
+            <button class="filter-btn" onclick="filterBlogs('mobile')">Mobile</button>
+            <button class="filter-btn" onclick="filterBlogs('cloud')">Cloud</button>
+            <button class="filter-btn" onclick="filterBlogs('security')">Security</button>
+        </div>
+
+        <div class="section">
+            <h2>Featured Article</h2>
+            <div class="featured-blog" data-category="ai">
+                <div class="featured-blog-content">
+                    <div class="featured-image">🤖</div>
+                    <div class="featured-text">
+                        <span class="featured-badge">🔥 FEATURED</span>
+                        <h3>The Future of AI: How Machine Learning is Transforming Software Development</h3>
+                        <div class="blog-meta">
+                            <span>👤 By Sarah Johnson</span>
+                            <span>📅 October 20, 2025</span>
+                            <span>⏱️ 12 min read</span>
+                        </div>
+                        <p>Explore how artificial intelligence and machine learning are revolutionizing the way we build software. From automated code generation to intelligent debugging, discover the tools and techniques that are shaping the future of development.</p>
+                        <a href="#" class="read-more">Read Full Article →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Latest Articles</h2>
+            <div class="blog-grid" id="blogGrid">
+                <!-- Web Development Blogs -->
+                <div class="blog-card" data-category="webdev">
+                    <div class="blog-image">⚛️</div>
+                    <div class="blog-content">
+                        <span class="blog-category">Web Development</span>
+                        <h3 class="blog-title">React 19: What's New and Exciting</h3>
+                        <p class="blog-excerpt">Dive into the latest features of React 19, including improved server components, automatic batching, and new hooks that will make your development experience smoother.</p>
+                        <div class="blog-footer">
+                            <span class="blog-author">👤 Mike Chen</span>
+                            <span class="blog-date">Oct 22, 2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog-card" data-category="webdev">
+                    <div class="blog-image">🎨</div>
+                    <div class="blog-content">
+                        <span class="blog-category">Web Development</span>
+                        <h3 class="blog-title">Modern CSS Techniques for 2025</h3>
+                        <p class="blog-excerpt">Master the latest CSS features including container queries, cascade layers, and color functions. Learn how to create stunning designs with less code.</p>
+                        <div class="blog-footer">
+                            <span class="blog-author">👤 Emma Davis</span>
+                            <span class="blog-date">Oct 21, 2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog-card" data-category="webdev">
+                    <div class="blog-image">🚀</div>
+                    <div class="blog-content">
+                        <span class="blog-category">Web Development</span>
+                        <h3 class="blog-title">Next.js 15: Building Production-Ready Apps</h3>
+                        <p class="blog-excerpt">Complete guide to building scalable web applications with Next.js 15. Covers server actions, improved caching, and the new App Router features.</p>
+                        <div class="blog-footer">
+                            <span class="blog-author">👤 Alex Kumar</span>
+                            <span class="blog-date">Oct 19, 2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI & ML Blogs -->
+                <div class="blog-card" data-category="ai">
+                    <div class="blog-image">🧠</div>
+                    <div class="blog-content">
+                        <span class="blog-category">AI & Machine Learning</span>
+                        <h3 class="blog-title">Getting Started with Neural Networks</h3>
+                        <p class="blog-excerpt">A beginner-friendly introduction to neural networks. Learn the fundamentals, build your first model, and understand how deep learning actually works.</p>
+                        <div class="blog-footer">
+                            <span class="blog-author">👤 Dr. Lisa Wang</span>
+                            <span class="blog-date">Oct 18, 2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog-card" data-category="ai">
+                    <div class="blog-image">🤖</div>
+                    <div class="blog-content">
+                        <span class="blog-category">AI & Machine Learning</span>
+                        <h3 class="blog-title">Large Language Models: A Comprehensive Guide</h3>
+                        <p class="blog-excerpt">Explore how LLMs work, from transformers to fine-tuning. Learn to integrate AI models into your applications effectively and responsibly.</p>
+                        <div class="blog-footer">
+                            <span class="blog-author">👤 James Wilson</span>
+                            <span class="blog-date">Oct 17, 2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Development Blogs -->
+                <div class="blog-card" data-category="mobile">
+                    <div class="blog-image">📱</div>
+                    <div class="blog-content">
+                        <span class="blog-category">Mobile Development</span>
+                        <h3 class="blog-title">Flutter vs React Native: 2025 Comparison</h3>
+                        <p class="blog-excerpt">An in-depth comparison of the two leading cross-platform frameworks. Performance benchmarks, developer experience, and which one to choose for your project.</p>
+                        <div class="blog-footer">
+                            <span class="blog-author">👤 Sofia Martinez</span>
+                            <span class="blog-date">Oct 16, 2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog-card" data-category="mobile">
+                    <div class="blog-image">📲</div>
+                    <div class="blog-content">
+                        <span class="blog-category">Mobile Development</span>
+                        <h3 class="blog-title">Building Offline-First Mobile Apps</h3>
+                        <p class="blog-excerpt">Learn strategies for creating apps that work seamlessly offline. Local storage, sync mechanisms, and handling network transitions gracefully.</p>
+                        <div class="blog-footer">
+                            <span class="blog-author">👤 Ryan Foster</span>
+                            <span class="blog-date">Oct 15, 2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cloud Blogs -->
+                <div class="blog-card" data-category="cloud">
+                    <div class="blog-image">☁️</div>
+                    <div class="blog-content">
+                        <span class="blog-category">Cloud Computing</span>
+                        <h3 class="blog-title">AWS vs Azure vs GCP: Complete Comparison</h3>
+                        <p class="blog-excerpt">Compare the three major cloud providers across pricing, services, and performance. Make an informed decision for your infrastructure needs.</p>
+                        <div class="blog-footer">
+                            <span class="blog-author">👤 David Lee</span>
+                            <span class="blog-date">Oct 14, 2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog-card" data-category="cloud">
+                    <div class="blog-image">🐳</div>
+                    <div class="blog-content">
+                        <span class="blog-category">Cloud Computing</span>
+                        <h3 class="blog-title">Kubernetes Best Practices for Production</h3>
+                        <p class="blog-excerpt">Master container orchestration with Kubernetes. Security, scaling, monitoring, and deployment strategies for production environments.</p>
+                        <div class="blog-footer">
+                            <span class="blog-author">👤 Rachel Green</span>
+                            <span class="blog-date">Oct 13, 2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Blogs -->
+                <div class="blog-card" data-category="security">
+                    <div class="blog-image">🔒</div>
+                    <div class="blog-content">
+                        <span class="blog-category">Cybersecurity</span>
+                        <h3 class="blog-title">Web Security Essentials Every Developer Should Know</h3>
+                        <p class="blog-excerpt">Protect your applications from common vulnerabilities. OWASP Top 10, authentication best practices, and secure coding guidelines.</p>
+                        <div class="blog-footer">
+                            <span class="blog-author">👤 Tom Anderson</span>
+                            <span class="blog-date">Oct 12, 2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog-card" data-category="security">
+                    <div class="blog-image">🛡️</div>
+                    <div class="blog-content">
+                        <span class="blog-category">Cybersecurity</span>
+                        <h3 class="blog-title">Zero Trust Architecture Explained</h3>
+                        <p class="blog-excerpt">Understanding modern security architecture. Implement zero trust principles in your organization with practical examples and tools.</p>
+                        <div class="blog-footer">
+                            <span class="blog-author">👤 Jessica Brown</span>
+                            <span class="blog-date">Oct 11, 2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog-card" data-category="webdev">
+                    <div class="blog-image">⚡</div>
+                    <div class="blog-content">
+                        <span class="blog-category">Web Development</span>
+                        <h3 class="blog-title">Web Performance Optimization in 2025</h3>
+                        <p class="blog-excerpt">Speed up your websites with modern optimization techniques. Core Web Vitals, lazy loading, code splitting, and performance monitoring tools.</p>
+                        <div class="blog-footer">
+                            <span class="blog-author">👤 Chris Taylor</span>
+                            <span class="blog-date">Oct 10, 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pagination">
+            <button>← Previous</button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+            <button>Next →</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 TechVerse. All Rights Reserved.</p>
+        <p>Made with 💜 for developers worldwide</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('nav-menu').classList.toggle('active');
+        }
+
+        function filterBlogs(category) {
+            const cards = document.querySelectorAll('.blog-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function searchBlogs() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.blog-card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.blog-title').textContent.toLowerCase();
+                const excerpt = card.querySelector('.blog-excerpt').textContent.toLowerCase();
+                
+                if (title.includes(input) || excerpt.includes(input)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('nav');
+            const menu = document.getElementById('nav-menu');
+            
+            if (!nav.contains(event.target) && menu.classList.contains('active')) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

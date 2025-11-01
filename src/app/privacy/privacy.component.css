@@ -1,0 +1,43 @@
+.section-content {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 15px;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    animation: fadeIn 0.8s;
+}
+
+.section-content h2 {
+    color: var(--primary);
+    font-size: 1.8rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.section-content h2:first-child {
+    margin-top: 0;
+}
+
+.section-content p {
+    margin-bottom: 1rem;
+    color: #cbd5e1;
+}
+
+.section-content ul {
+    margin-left: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.section-content li {
+    margin-bottom: 0.5rem;
+    color: #cbd5e1;
+}
+
+.section-content strong {
+    color: var(--light);
+}
+
+.section-content em {
+    color: var(--primary);
+}
+

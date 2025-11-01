@@ -1,0 +1,16 @@
+<nav>
+    <div class="container">
+        <a routerLink="/" class="logo">TechVerse</a>
+        <button class="mobile-menu-btn" (click)="toggleMenu()" type="button">☰</button>
+        <ul [class.active]="isMenuOpen" id="nav-menu">
+            <li><a routerLink="/" routerLinkActive="active" (click)="closeMenu()">Home</a></li>
+            <li><a routerLink="/youtube" routerLinkActive="active" (click)="closeMenu()">YouTube Videos</a></li>
+            <li><a routerLink="/blogs" routerLinkActive="active" (click)="closeMenu()">Blogs</a></li>
+            <li><a routerLink="/about" routerLinkActive="active" (click)="closeMenu()">About Us</a></li>
+            <li><a routerLink="/contact" routerLinkActive="active" (click)="closeMenu()">Contact Us</a></li>
+            <li><a routerLink="/privacy" routerLinkActive="active" (click)="closeMenu()">Privacy Policy</a></li>
+            <li><a routerLink="/terms" routerLinkActive="active" (click)="closeMenu()">Terms & Conditions</a></li>
+        </ul>
+    </div>
+</nav>
+

@@ -1,0 +1,91 @@
+<div class="container">
+    <div class="hero">
+        <h1>🎥 YouTube Video Tutorials</h1>
+        <p>Watch & Learn from Expert-Led Video Content</p>
+    </div>
+
+    <div class="section">
+        <h2>Browse by Category</h2>
+        <div class="filter-tabs">
+            <button class="filter-btn" [class.active]="selectedCategory === 'all'" (click)="filterVideos('all')">All Videos</button>
+            <button class="filter-btn" [class.active]="selectedCategory === 'webdev'" (click)="filterVideos('webdev')">Web Development</button>
+            <button class="filter-btn" [class.active]="selectedCategory === 'python'" (click)="filterVideos('python')">Python</button>
+            <button class="filter-btn" [class.active]="selectedCategory === 'javascript'" (click)="filterVideos('javascript')">JavaScript</button>
+            <button class="filter-btn" [class.active]="selectedCategory === 'ai'" (click)="filterVideos('ai')">AI & ML</button>
+            <button class="filter-btn" [class.active]="selectedCategory === 'mobile'" (click)="filterVideos('mobile')">Mobile Dev</button>
+        </div>
+
+        <div class="video-grid">
+            <div class="video-card" data-category="webdev">
+                <div class="video-thumbnail">
+                    <div class="play-button"></div>
+                    <div class="duration">24:15</div>
+                </div>
+                <div class="video-info">
+                    <span class="video-category">Web Development</span>
+                    <h3 class="video-title">Complete React JS Course for Beginners 2025</h3>
+                    <p class="video-description">Learn React from scratch with hooks, state management, and build real-world projects.</p>
+                    <div class="video-stats">
+                        <span>👁️ 125K views</span>
+                        <span>📅 2 weeks ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="webdev">
+                <div class="video-thumbnail">
+                    <div class="play-button"></div>
+                    <div class="duration">18:42</div>
+                </div>
+                <div class="video-info">
+                    <span class="video-category">Web Development</span>
+                    <h3 class="video-title">CSS Grid & Flexbox - Master Responsive Design</h3>
+                    <p class="video-description">Master modern CSS layouts and create stunning responsive websites.</p>
+                    <div class="video-stats">
+                        <span>👁️ 89K views</span>
+                        <span>📅 1 month ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="python">
+                <div class="video-thumbnail">
+                    <div class="play-button"></div>
+                    <div class="duration">45:30</div>
+                </div>
+                <div class="video-info">
+                    <span class="video-category">Python</span>
+                    <h3 class="video-title">Python Programming Complete Bootcamp</h3>
+                    <p class="video-description">Everything you need to know about Python from basics to advanced concepts.</p>
+                    <div class="video-stats">
+                        <span>👁️ 234K views</span>
+                        <span>📅 1 week ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="javascript">
+                <div class="video-thumbnail">
+                    <div class="play-button"></div>
+                    <div class="duration">22:10</div>
+                </div>
+                <div class="video-info">
+                    <span class="video-category">JavaScript</span>
+                    <h3 class="video-title">Modern JavaScript ES6+ Features Explained</h3>
+                    <p class="video-description">Master modern JavaScript with arrow functions, destructuring, async/await and more.</p>
+                    <div class="video-stats">
+                        <span>👁️ 145K views</span>
+                        <span>📅 5 days ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="subscribe-cta">
+        <h3>🔔 Subscribe to Our YouTube Channel</h3>
+        <p>Get notified about new tutorials, coding tips, and tech insights every week!</p>
+        <a href="#" class="btn btn-gradient">Subscribe Now</a>
+    </div>
+</div>
+

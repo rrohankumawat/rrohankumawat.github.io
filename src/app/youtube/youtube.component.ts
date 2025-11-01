@@ -9,6 +9,7 @@ interface Video {
   views: string;
   date: string;
   categoryLabel: string;
+  url: string;
 }
 
 @Component({
@@ -29,7 +30,8 @@ export class YoutubeComponent {
       duration: '24:15',
       views: '125K',
       date: '2 weeks ago',
-      categoryLabel: 'Web Development'
+      categoryLabel: 'Web Development',
+      url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
     },
     {
       category: 'webdev',
@@ -38,7 +40,8 @@ export class YoutubeComponent {
       duration: '18:42',
       views: '89K',
       date: '1 month ago',
-      categoryLabel: 'Web Development'
+      categoryLabel: 'Web Development',
+      url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
     },
     {
       category: 'python',
@@ -47,7 +50,8 @@ export class YoutubeComponent {
       duration: '45:30',
       views: '234K',
       date: '1 week ago',
-      categoryLabel: 'Python'
+      categoryLabel: 'Python',
+      url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
     },
     {
       category: 'javascript',
@@ -56,7 +60,8 @@ export class YoutubeComponent {
       duration: '22:10',
       views: '145K',
       date: '5 days ago',
-      categoryLabel: 'JavaScript'
+      categoryLabel: 'JavaScript',
+      url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
     }
   ];
 

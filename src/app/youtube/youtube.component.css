@@ -34,6 +34,9 @@
 }
 
 .video-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
     background: var(--card-bg);
     border-radius: 15px;
     overflow: hidden;

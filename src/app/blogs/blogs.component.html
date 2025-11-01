@@ -19,39 +19,43 @@
 
     <div class="section" *ngIf="shouldShowFeaturedBlog">
         <h2>Featured Article</h2>
-        <div class="featured-blog" [attr.data-category]="featuredBlog.category">
-            <div class="featured-blog-content">
-                <div class="featured-image">🤖</div>
-                <div class="featured-text">
-                    <span class="featured-badge">🔥 FEATURED</span>
-                    <h3>{{ featuredBlog.title }}</h3>
-                    <div class="blog-meta">
-                        <span>👤 By {{ featuredBlog.author }}</span>
-                        <span>📅 {{ featuredBlog.date }}</span>
-                        <span>⏱️ {{ featuredBlog.readTime }}</span>
+        <a [routerLink]="['/blog', featuredBlog.id]" class="featured-blog-link">
+            <div class="featured-blog" [attr.data-category]="featuredBlog.category">
+                <div class="featured-blog-content">
+                    <div class="featured-image">🤖</div>
+                    <div class="featured-text">
+                        <span class="featured-badge">🔥 FEATURED</span>
+                        <h3>{{ featuredBlog.title }}</h3>
+                        <div class="blog-meta">
+                            <span>👤 By {{ featuredBlog.author }}</span>
+                            <span>📅 {{ featuredBlog.date }}</span>
+                            <span>⏱️ {{ featuredBlog.readTime }}</span>
+                        </div>
+                        <p>{{ featuredBlog.description }}</p>
+                        <span class="read-more">Read Full Article →</span>
                     </div>
-                    <p>{{ featuredBlog.description }}</p>
-                    <a href="#" class="read-more">Read Full Article →</a>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="section">
         <h2>Latest Articles</h2>
         <div class="blog-grid" *ngIf="filteredBlogs.length > 0">
-            <div class="blog-card" *ngFor="let blog of filteredBlogs" [attr.data-category]="blog.category">
-                <div class="blog-image">{{ blog.image }}</div>
-                <div class="blog-content">
-                    <span class="blog-category">{{ blog.categoryLabel }}</span>
-                    <h3 class="blog-title">{{ blog.title }}</h3>
-                    <p class="blog-excerpt">{{ blog.excerpt }}</p>
-                    <div class="blog-footer">
-                        <span class="blog-author">👤 {{ blog.author }}</span>
-                        <span class="blog-date">{{ blog.date }}</span>
+            <a [routerLink]="['/blog', blog.id]" class="blog-card-link" *ngFor="let blog of filteredBlogs">
+                <div class="blog-card" [attr.data-category]="blog.category">
+                    <div class="blog-image">{{ blog.image }}</div>
+                    <div class="blog-content">
+                        <span class="blog-category">{{ blog.categoryLabel }}</span>
+                        <h3 class="blog-title">{{ blog.title }}</h3>
+                        <p class="blog-excerpt">{{ blog.excerpt }}</p>
+                        <div class="blog-footer">
+                            <span class="blog-author">👤 {{ blog.author }}</span>
+                            <span class="blog-date">{{ blog.date }}</span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
         <div *ngIf="filteredBlogs.length === 0" class="no-results">
             <p>No blogs found matching your criteria. Try adjusting your search or filter.</p>

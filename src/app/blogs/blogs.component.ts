@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 interface Blog {
+  id: string;
   category: string;
   title: string;
   excerpt: string;
@@ -24,7 +26,7 @@ interface FeaturedBlog {
 @Component({
   selector: 'app-blogs',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './blogs.component.html',
   styleUrl: './blogs.component.css'
 })
@@ -32,7 +34,8 @@ export class BlogsComponent {
   selectedCategory = 'all';
   searchQuery = '';
 
-  featuredBlog: FeaturedBlog = {
+  featuredBlog: FeaturedBlog & { id: string } = {
+    id: 'future-of-ai-ml-software-development',
     category: 'ai',
     title: 'The Future of AI: How Machine Learning is Transforming Software Development',
     description: 'Explore how artificial intelligence and machine learning are revolutionizing the way we build software. From automated code generation to intelligent debugging, discover the tools and techniques that are shaping the future of development.',
@@ -43,6 +46,7 @@ export class BlogsComponent {
 
   blogs: Blog[] = [
     {
+      id: 'react-19-new-features',
       category: 'webdev',
       title: 'React 19: What\'s New and Exciting',
       excerpt: 'Dive into the latest features of React 19, including improved server components, automatic batching, and new hooks that will make your development experience smoother.',
@@ -52,6 +56,7 @@ export class BlogsComponent {
       image: '⚛️'
     },
     {
+      id: 'modern-css-techniques-2025',
       category: 'webdev',
       title: 'Modern CSS Techniques for 2025',
       excerpt: 'Master the latest CSS features including container queries, cascade layers, and color functions. Learn how to create stunning designs with less code.',
@@ -61,6 +66,7 @@ export class BlogsComponent {
       image: '🎨'
     },
     {
+      id: 'getting-started-neural-networks',
       category: 'ai',
       title: 'Getting Started with Neural Networks',
       excerpt: 'A beginner-friendly introduction to neural networks. Learn the fundamentals, build your first model, and understand how deep learning actually works.',
@@ -70,6 +76,7 @@ export class BlogsComponent {
       image: '🧠'
     },
     {
+      id: 'flutter-vs-react-native-2025',
       category: 'mobile',
       title: 'Flutter vs React Native: 2025 Comparison',
       excerpt: 'An in-depth comparison of the two leading cross-platform frameworks. Performance benchmarks, developer experience, and which one to choose for your project.',

@@ -16,7 +16,7 @@
         </div>
 
         <div class="video-grid">
-            <div class="video-card" *ngFor="let video of filteredVideos" [attr.data-category]="video.category">
+            <a [href]="video.url" target="_blank" rel="noopener noreferrer" class="video-card" *ngFor="let video of filteredVideos" [attr.data-category]="video.category">
                 <div class="video-thumbnail">
                     <div class="play-button"></div>
                     <div class="duration">{{ video.duration }}</div>
@@ -30,7 +30,7 @@
                         <span>📅 {{ video.date }}</span>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 

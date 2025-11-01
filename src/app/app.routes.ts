@@ -4,6 +4,7 @@ export const routes: Routes = [
   { path: '', loadComponent: () => import('./home/home.component').then(m => m.HomeComponent) },
   { path: 'about', loadComponent: () => import('./about/about.component').then(m => m.AboutComponent) },
   { path: 'blogs', loadComponent: () => import('./blogs/blogs.component').then(m => m.BlogsComponent) },
+  { path: 'blog/:id', loadComponent: () => import('./blog-detail/blog-detail.component').then(m => m.BlogDetailComponent) },
   { path: 'youtube', loadComponent: () => import('./youtube/youtube.component').then(m => m.YoutubeComponent) },
   { path: 'contact', loadComponent: () => import('./contact/contact.component').then(m => m.ContactComponent) },
   { path: 'privacy', loadComponent: () => import('./privacy/privacy.component').then(m => m.PrivacyComponent) },

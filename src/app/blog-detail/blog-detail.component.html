@@ -1,0 +1,29 @@
+<div class="container" *ngIf="blog">
+    <div class="blog-header">
+        <a routerLink="/blogs" class="back-link">← Back to Blogs</a>
+        <div class="blog-meta-header">
+            <span class="blog-category">{{ blog.categoryLabel }}</span>
+            <span class="blog-date">{{ blog.date }}</span>
+        </div>
+    </div>
+
+    <article class="blog-content">
+        <div class="blog-title-section">
+            <div class="blog-icon">{{ blog.image }}</div>
+            <h1>{{ blog.title }}</h1>
+            <div class="blog-author-info">
+                <span class="blog-author">👤 {{ blog.author }}</span>
+                <span class="read-time">⏱️ 8 min read</span>
+            </div>
+        </div>
+
+        <div class="blog-body" [innerHTML]="blog.content"></div>
+    </article>
+</div>
+
+<div class="container" *ngIf="!blog">
+    <div class="loading">
+        <p>Loading blog...</p>
+    </div>
+</div>
+

@@ -17,20 +17,20 @@
         <button class="filter-btn" [class.active]="selectedCategory === 'security'" (click)="filterBlogs('security')">Security</button>
     </div>
 
-    <div class="section">
+    <div class="section" *ngIf="shouldShowFeaturedBlog">
         <h2>Featured Article</h2>
-        <div class="featured-blog" data-category="ai">
+        <div class="featured-blog" [attr.data-category]="featuredBlog.category">
             <div class="featured-blog-content">
                 <div class="featured-image">🤖</div>
                 <div class="featured-text">
                     <span class="featured-badge">🔥 FEATURED</span>
-                    <h3>The Future of AI: How Machine Learning is Transforming Software Development</h3>
+                    <h3>{{ featuredBlog.title }}</h3>
                     <div class="blog-meta">
-                        <span>👤 By Sarah Johnson</span>
-                        <span>📅 October 20, 2025</span>
-                        <span>⏱️ 12 min read</span>
+                        <span>👤 By {{ featuredBlog.author }}</span>
+                        <span>📅 {{ featuredBlog.date }}</span>
+                        <span>⏱️ {{ featuredBlog.readTime }}</span>
                     </div>
-                    <p>Explore how artificial intelligence and machine learning are revolutionizing the way we build software. From automated code generation to intelligent debugging, discover the tools and techniques that are shaping the future of development.</p>
+                    <p>{{ featuredBlog.description }}</p>
                     <a href="#" class="read-more">Read Full Article →</a>
                 </div>
             </div>
@@ -39,58 +39,22 @@
 
     <div class="section">
         <h2>Latest Articles</h2>
-        <div class="blog-grid">
-            <div class="blog-card" data-category="webdev">
-                <div class="blog-image">⚛️</div>
+        <div class="blog-grid" *ngIf="filteredBlogs.length > 0">
+            <div class="blog-card" *ngFor="let blog of filteredBlogs" [attr.data-category]="blog.category">
+                <div class="blog-image">{{ blog.image }}</div>
                 <div class="blog-content">
-                    <span class="blog-category">Web Development</span>
-                    <h3 class="blog-title">React 19: What's New and Exciting</h3>
-                    <p class="blog-excerpt">Dive into the latest features of React 19, including improved server components, automatic batching, and new hooks that will make your development experience smoother.</p>
+                    <span class="blog-category">{{ blog.categoryLabel }}</span>
+                    <h3 class="blog-title">{{ blog.title }}</h3>
+                    <p class="blog-excerpt">{{ blog.excerpt }}</p>
                     <div class="blog-footer">
-                        <span class="blog-author">👤 Mike Chen</span>
-                        <span class="blog-date">Oct 22, 2025</span>
+                        <span class="blog-author">👤 {{ blog.author }}</span>
+                        <span class="blog-date">{{ blog.date }}</span>
                     </div>
                 </div>
             </div>
-
-            <div class="blog-card" data-category="webdev">
-                <div class="blog-image">🎨</div>
-                <div class="blog-content">
-                    <span class="blog-category">Web Development</span>
-                    <h3 class="blog-title">Modern CSS Techniques for 2025</h3>
-                    <p class="blog-excerpt">Master the latest CSS features including container queries, cascade layers, and color functions. Learn how to create stunning designs with less code.</p>
-                    <div class="blog-footer">
-                        <span class="blog-author">👤 Emma Davis</span>
-                        <span class="blog-date">Oct 21, 2025</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="blog-card" data-category="ai">
-                <div class="blog-image">🧠</div>
-                <div class="blog-content">
-                    <span class="blog-category">AI & Machine Learning</span>
-                    <h3 class="blog-title">Getting Started with Neural Networks</h3>
-                    <p class="blog-excerpt">A beginner-friendly introduction to neural networks. Learn the fundamentals, build your first model, and understand how deep learning actually works.</p>
-                    <div class="blog-footer">
-                        <span class="blog-author">👤 Dr. Lisa Wang</span>
-                        <span class="blog-date">Oct 18, 2025</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="blog-card" data-category="mobile">
-                <div class="blog-image">📱</div>
-                <div class="blog-content">
-                    <span class="blog-category">Mobile Development</span>
-                    <h3 class="blog-title">Flutter vs React Native: 2025 Comparison</h3>
-                    <p class="blog-excerpt">An in-depth comparison of the two leading cross-platform frameworks. Performance benchmarks, developer experience, and which one to choose for your project.</p>
-                    <div class="blog-footer">
-                        <span class="blog-author">👤 Sofia Martinez</span>
-                        <span class="blog-date">Oct 16, 2025</span>
-                    </div>
-                </div>
-            </div>
+        </div>
+        <div *ngIf="filteredBlogs.length === 0" class="no-results">
+            <p>No blogs found matching your criteria. Try adjusting your search or filter.</p>
         </div>
     </div>
 </div>
